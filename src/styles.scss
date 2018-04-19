@@ -1,1 +1,71 @@
 /* You can add global styles to this file, and also import other style files */
+
+// ---------------------------------------------------------
+// global declarations
+
+
+// ---------------------------------------------------------
+// mixins mediaQueries
+
+$tablet-width: 768px;
+$desktop-width: 1024px;
+
+@mixin smartphone {
+  @media (max-width: #{$tablet-width - 1px}) { @content; }
+}
+
+@mixin tablet {
+  @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) { @content; }
+}
+
+@mixin desktop {
+  @media (min-width: #{$desktop-width}) { @content; }
+}
+
+// mixins' test => 
+
+// se muestra en dispositivos pequeños
+@include smartphone {
+  body {
+    //background-color: red !important;
+  }
+}
+
+// se muestra en dispositivos grandes
+@include desktop {
+  body {
+    //background-color: blue !important;
+  }
+}
+
+// ---------------------------------------------------------
+// Estilos para el body
+
+$padding-body: 70px;
+
+body {
+  padding-top: $padding-body;
+}
+
+// se muestra en dispositivos medianos y grandes
+@include desktop {
+  body {
+    padding-top: $padding-body + 5px;
+  }
+}
+
+// ---------------------------------------------------------
+// Estilos para formularios
+
+form {
+  .ng-valid[required], .ng-valid.required  {
+    border-left: 5px solid #42A948;
+  }
+  
+  .ng-invalid:not(form)  {
+    border-left: 5px solid #a94442;
+  }
+}
+
+
+// ---------------------------------------------------------

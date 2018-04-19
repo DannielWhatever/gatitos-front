@@ -1,0 +1,70 @@
+<div class="container user-profile-container">
+
+  <app-util-title [title]="title"></app-util-title>
+  <app-util-breadcrumb [active]="title"></app-util-breadcrumb>
+
+  <hr/>
+
+  <!-- Mi perfil -->
+  <div *ngIf="!!session" class="row profile-info">
+
+    <div class="col-lg-2 mb-4">
+      <img src="{{ session.avatar }}" class="rounded profile-image" alt="Imágen de perfil" />
+      <br/>
+      <label>Cambiar</label>
+    </div>
+
+    <div class="col-lg-8 mb-4">
+      <label>Hola {{ session.name }} !</label>
+
+      <p>
+        <label>Email : </label> {{ session.email }}
+        <br/>
+        <label>Teléfono : </label> {{ session.phone ? session.phone : 'no registrado' }}
+        <br/>
+        <label>Ubicación : </label> {{ session.country && session.city ? session.city + ', ' + session.country : 'no registrada'
+        }}
+        <br/>
+      </p>
+
+      <button class="btn btn-primary">Actualizar datos</button>
+    </div>
+
+  </div>
+  <!-- /.row /.profile-info -->
+
+  <hr/>
+
+  <!-- Mis Publicaciones -->
+  <div *ngIf="1<2" class="row profile-publications">
+    <div class="col-lg-8 mb-4">
+      <h5>Mis Publicaciones</h5>
+      <br/>
+
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Gatito</th>
+            <th scope="col">Fecha de publicación</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of publishedAdoptions; let i = index">
+            <th scope="row">{{ i + 1 }}</th>
+            <td><a href="#" [routerLink]="['/adoptame/'+item.id]">{{ item.name }}</a></td>
+            <td>{{ item?.publishedDate | string2date | date:'fullDate':'GMT-3':'en-US'}}</td>
+            <td><button class="btn btn-outline-danger" (click)="delete(item.id)" >Borrar</button></td>
+          </tr>
+        </tbody>
+      </table>
+
+
+    </div>
+
+  </div>
+  <!-- /.row /.profile-publications -->
+
+</div>
+<!-- /.container -->

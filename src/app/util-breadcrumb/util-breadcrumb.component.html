@@ -1,0 +1,18 @@
+<!-- Breadcrumbs -->
+<ol class="breadcrumb">
+  
+  <!-- root -->
+  <li class="breadcrumb-item">
+    <a [routerLink]="['/home']">Inicio</a>
+  </li>
+  
+  <!-- previous -->
+  <li *ngFor="let prev of previous" class="breadcrumb-item">
+    <a [routerLink]="[prev.link]">{{ prev.title }}</a>
+  </li>
+
+  <!-- active -->
+  <li *ngIf="!root" class="breadcrumb-item active">{{ active }}</li>
+
+</ol>
+<!-- ./breadcrumb -->

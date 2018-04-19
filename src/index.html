@@ -1,14 +1,40 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>MyApp</title>
   <base href="/">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-signin-client_id" content="156779696297-f2k9iadvn7ihl0g5vi5bd3sv483jccvd.apps.googleusercontent.com">
+
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
+
 <body>
   <app-root></app-root>
+
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <script>
+    if (typeof (Storage) !== "undefined") {
+
+      function onSignIn(googleUser) {
+        const profile = googleUser.getBasicProfile();
+        console.log(googleUser);
+        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead. 
+        //**Create an id in the backend associated to the email (maybe a hash).
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+        localStorage.setItem('session', JSON.stringify(profile));
+      }
+
+    } else {
+      // Sorry! No Web Storage support..
+    }
+
+  </script>
 </body>
+
 </html>

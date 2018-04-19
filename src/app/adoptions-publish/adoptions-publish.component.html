@@ -1,0 +1,137 @@
+<div class="container adoptions-publish-container">
+
+  <app-util-title [title]="title"></app-util-title>
+  <app-util-breadcrumb [active]="title" [previous]="previous"></app-util-breadcrumb>
+
+  <!-- Publish Form -->
+  <div class="row" [hidden]="isSubmitted">
+    <div class="col-lg-8 mb-4">
+
+      <form (ngSubmit)="onSubmit()" #publishForm="ngForm">
+
+        <h4>Datos de tu gatito</h4>
+
+        <div class="form-group">
+          <label for="name">Nombre del gatito</label>
+          <input type="text" class="form-control" id="name" name="name" [(ngModel)]="nc.name" required />
+        </div>
+
+        <div class="form-group">
+          <label for="genre">Genero</label>
+          <select class="form-control" id="genre" name="genre" [(ngModel)]="nc.genre" required>
+            <option *ngFor="let genre of genres" [value]="genre">{{genre}}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="age">Edad</label>
+          <select class="form-control" id="age" name="age" [(ngModel)]="nc.age" required>
+            <option *ngFor="let catAge of ages" [value]="catAge.getValue()">{{ catAge.getAge() }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="picture">Foto</label>
+          <!-- <input disabled type="text" class="form-control" id="picture" name="picture" [(ngModel)]="nc.picture" required /> -->
+          <input type="file" class="form-control" (change)="fileChange($event)" accept=".jpg,.png" required>
+        </div>
+
+        <div class="form-group">
+          <label for="description">Deja que tu gatito se presente</label>
+          <textarea class="form-control" id="description" name="description" [(ngModel)]="nc.description" rows="4" cols="100" maxlength="500"
+            required></textarea>
+        </div>
+
+        <hr />
+
+        <h4>Tus datos de contacto</h4>
+
+        <div *ngIf="!session">
+          <div class="form-group">
+            <label for="authorName">Tu nombre</label>
+            <input type="text" class="form-control" id="authorName" name="authorName" [(ngModel)]="nc.author.name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="authorEmail">Email</label>
+            <input type="email" class="form-control" id="authorEmail" name="authorEmail" [(ngModel)]="nc.author.email" />
+          </div>
+
+          <div class="form-group">
+            <label for="authorPhone">Teléfono</label>
+            <input type="phone" class="form-control" id="authorPhone" name="authorPhone" [(ngModel)]="nc.author.phone" />
+          </div>
+
+          <div class="form-group">
+            <label for="city">Ciudad</label>
+            <select class="form-control" id="city" name="city" [(ngModel)]="nc.author.city" required>
+              <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+            </select>
+          </div>
+
+        </div>
+
+
+        <div *ngIf="!!session" class="alert alert-primary" role="alert">
+          <p *ngIf="!!nc.author.name">
+            <label>Nombre: </label> {{ nc.author.name }}
+          </p>
+          <p *ngIf="!!nc.author.email">
+            <input type="checkbox" name="checkEmail" aria-label="Incluir email para contacto" [(ngModel)]="nc.author.publishEmail" />
+            <label>Incluir email: </label> {{ nc.author.email }}
+          </p>
+          <p *ngIf="!!nc.author.phone">
+            <input type="checkbox" name="checkPhone" aria-label="Incluir teléfono para contacto" [(ngModel)]="nc.author.publishPhone"
+            />
+            <label>Teléfono: </label> {{ nc.author.phone }}
+          </p>
+          <p *ngIf="!!nc.author.country">
+            <label>Ubicación: </label> {{ nc.author.city + ', ' + nc.author.country }}
+          </p>
+        </div>
+
+        <br/>
+
+        <div [hidden]="validEmailOrPhone()" class="alert alert-warning" role="alert">
+          <p>
+            Debes seleccionar al menos uno, email o teléfono, así te puedan contactar ;)
+          </p>
+        </div>
+
+        <button type="submit" class="btn btn-success" [disabled]="!publishForm.form.valid || !validEmailOrPhone()">Publicar</button>
+
+      </form>
+
+    </div>
+    <!-- /.col -->
+
+  </div>
+  <!-- /.row -->
+
+  <!-- Published Ok Message -->
+  <div class="row" [hidden]="!isSubmitted">
+    <div class="col-lg-10 mb-6">
+
+      <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading">Yeah</h4>
+        <p>
+          Tu publicación ha sido realizada!
+          <a href="#" [routerLink]="['/adoptame']" class="alert-link">Visítala!</a>
+        </p>
+        <hr>
+        <p>
+          En tu publicación aparecerán tus datos de perfil...
+          <a href="#" [routerLink]="['/mi-perfil']" class="alert-link">Revisalos!</a>
+        </p>
+      </div>
+
+    </div>
+    <!-- /.col -->
+
+  </div>
+  <!-- /.row -->
+
+
+
+</div>
+<!-- /.container -->

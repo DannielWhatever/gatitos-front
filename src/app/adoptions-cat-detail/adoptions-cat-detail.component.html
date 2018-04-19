@@ -1,0 +1,67 @@
+<!-- Page Content -->
+<div class="container adoptions-cat-detail-container">
+
+  <app-util-title [title]="cat?.name"></app-util-title>
+  <app-util-breadcrumb [active]="cat?.name" [previous]="previous"></app-util-breadcrumb>
+
+  <!-- Portfolio Item Row -->
+  <div class="row">
+
+    <div class="col-md-8">
+      <img class="img-fluid" src="{{ getImageUrl(cat?.picture) }}" alt="{{ cat?.name }}">
+    </div>
+
+    <div class="col-md-4">
+
+      <!-- .cat-presentation -->
+      <div class="cat-presentation">
+        <h3 class="my-3">{{ cat?.name }}</h3>
+        <p> {{ cat?.description }} </p>
+        <h3 class="my-3">Conóceme :)</h3>
+        <ul>
+          <li>Soy {{ cat?.genre | lowercase }}</li>
+          <li>Tengo {{ cat?.age | catAge }}</li>
+          <li>Encuentrame en {{ cat?.author?.city }}</li>
+        </ul>
+      </div>
+      <!-- /.cat-presentation -->
+
+      <!-- .card-contact -->
+      <div class="card card-contact">
+        <div class="card-body">
+          <div *ngIf="showContact">
+            <h5 class="card-title">{{ cat.author?.name }}</h5>
+            <div class="card-text">
+
+              <p *ngIf="!!cat?.author?.email">
+                <span class="oi oi-envelope-closed" title="email" aria-hidden="true"></span>
+                <span>{{ cat?.author?.email }}</span>
+                <br/>
+              </p>
+
+              <p *ngIf="!!cat?.author?.phone">
+                <span class="oi oi-phone" title="teléfono" aria-hidden="true"></span>
+                <span>{{ cat?.author?.phone }}</span>
+                <br/>
+              </p>
+
+            </div>
+          </div>
+
+
+          <button (click)="toggleShowContact();" class="btn btn-primary">
+            {{ (showContact ? 'Ocultar' : 'Ver') + ' contacto' }}
+          </button>
+        </div>
+      </div>
+      <!-- /.card-contact -->
+
+    </div>
+
+  </div>
+  <!-- /.row -->
+
+  <app-adoptions-related></app-adoptions-related>
+
+</div>
+<!-- /.container -->
